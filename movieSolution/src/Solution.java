@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -9,6 +12,9 @@ import java.util.Arrays;
 import com.google.gson.Gson;
 
 public class Solution {
+	
+	private static final String PATH = "/home/vstevam/Desktop/projects/movieSolution/FirstData/src/json/movie.json";
+	
 	/*
 	 * Complete the function below.
 	 */
@@ -18,7 +24,8 @@ public class Solution {
 		int pageNumber = 1;
 		String[] resp = new String[13];
 
-		StringBuffer response = getJsonbyURL(substr, pageNumber);
+		//StringBuffer response = getJsonbyURL(substr, pageNumber);
+		StringBuffer response = getJsonbyFile(PATH);
 
 		System.out.println(response.toString());
 
@@ -68,6 +75,20 @@ public class Solution {
 		in.close();
 
 		return response;
+	}
+	
+	private static StringBuffer getJsonbyFile(String path) throws IOException {
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(path),"ISO-8859-1"));
+
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+		while((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		
+		return response;
+		
 	}
 
 	public static void main(String[] args) throws IOException {
